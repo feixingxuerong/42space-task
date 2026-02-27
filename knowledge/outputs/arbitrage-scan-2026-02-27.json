@@ -1,0 +1,96 @@
+/**
+ * Arbitrage Scan Report - 42space vs Polymarket
+ * Generated: 2026-02-27
+ * 
+ * SCAN RESULTS SUMMARY:
+ * ====================
+ * Total 42space markets: 10
+ * Markets with Polymarket equivalents: 3
+ * Significant arbitrage opportunities (>10%): 1
+ * 
+ * FINDINGS:
+ * =========
+ * 
+ * 1. BTC Price Feb 24 (42space) vs BTC Price Feb 27 (Polymarket)
+ *    - Date mismatch: 42space resolved Feb 24, Poly is for Feb 27
+ *    - Still shows pricing differences:
+ *    
+ *    Range Comparison:
+ *    - $65K-$66.5K (42space) vs 64K-66K (Poly): 46.6% vs 20% = 26.6% DIFF ⚠️
+ *    - $66.5K-$69K (42space) vs 66K-68K (Poly): ~8.3% vs 61% = 52.7% DIFF ⚠️
+ *    
+ *    NOTE: These markets have resolved on 42space (Feb 24) - for historical comparison only
+ * 
+ * 2. ETH Price Feb 21 (42space) vs ETH Price Feb 27 (Polymarket)
+ *    - Date mismatch: 42space resolved Feb 21
+ *    - 42space: $1900-$1950: 53.9%, $1950-$2000: 40.6%
+ *    - Polymarket: 1900-2000: 52%, 2000-2100: 41%
+ *    - Close alignment, no significant arbitrage
+ * 
+ * 3. Bank of Japan March 2026
+ *    - Already in KNOWN_POLYMARKET_EVENTS
+ *    - 42space: No change 40.7%, 25bps decrease 41.4%, 25+bps increase 16.4%
+ *    - Polymarket: No change 94.8%, 25bps increase 4%
+ *    - Significant diff: No change 40.7% vs 94.8% = 54.1% DIFF! 🚨
+ *    - NOTE: 42space outcome names differ - needs mapping review
+ * 
+ * MARKETS NOT FOUND ON POLYMARKET:
+ * ================================
+ * - BNB price ranges (Feb 18)
+ * - Gold price range (Mar 5)
+ * - SOL price ranges (Feb 9, 24)
+ * - Sports (EPL matches)
+ * 
+ * NOTES:
+ * ======
+ * - Most 42space crypto price markets have already resolved (past dates)
+ * - Polymarket primarily has Feb 27 and forward dates
+ * - For active arbitrage, need to monitor same-day markets
+ * - BOJ and Fed markets show most potential for rate decision arbitrage
+ */
+
+{
+  "timestamp": "2026-02-27T10:32:00Z",
+  "totalMarkets": 10,
+  "comparableMarkets": 3,
+  "arbitrageOpportunities": 1,
+  "opportunities": [
+    {
+      "ftMarket": "BTC price range, Feb 24th",
+      "polyMarket": "Bitcoin price on February 27",
+      "url": "https://polymarket.com/event/bitcoin-price-on-february-27",
+      "status": "resolved",
+      "note": "Historical comparison - 42space already resolved",
+      "comparisons": [
+        {
+          "outcome": "$65000 – $66500",
+          "ftProb": "46.6%",
+          "polyProb": "20%",
+          "diff": "26.6%"
+        }
+      ]
+    },
+    {
+      "ftMarket": "Bank of Japan decision in March 2026",
+      "polyMarket": "Bank of Japan Decision in March",
+      "url": "https://polymarket.com/event/bank-of-japan-decision-in-march",
+      "status": "active",
+      "comparisons": [
+        {
+          "outcome": "No change",
+          "ftProb": "40.7%",
+          "polyProb": "94.8%",
+          "diff": "54.1%",
+          "note": "Requires outcome name mapping verification"
+        }
+      ]
+    }
+  ],
+  "notFound": [
+    "BNB price range Feb 18",
+    "Gold price range Mar 5", 
+    "SOL price range Feb 9",
+    "SOL price range Feb 24",
+    "EPL Brentford vs Arsenal"
+  ]
+}

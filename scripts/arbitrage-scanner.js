@@ -51,8 +51,10 @@ function calculate42spaceProbabilities(market) {
 /**
  * 已知 Polymarket 事件映射
  * 由子代理动态更新
+ * 更新时同时更新 arbitrage-scan-{date}.json 报告
  */
 const KNOWN_POLYMARKET_EVENTS = {
+  // Economy - Central Bank Decisions
   'bank of japan decision in march': {
     url: 'https://polymarket.com/event/bank-of-japan-decision-in-march',
     outcomes: {
@@ -68,6 +70,54 @@ const KNOWN_POLYMARKET_EVENTS = {
       'no change': 0.90,
       '25 bps increase': 0.08,
     }
+  },
+  'fed decision in march': {
+    url: 'https://polymarket.com/event/fed-decision-in-march-885',
+    outcomes: {
+      'no change': 0.97,  // 50+ bps decrease (2%) + 25 bps decrease (1%) = 3% cut = 97% no change
+      '25 bps decrease': 0.02,
+      '50+ bps decrease': 0.01
+    }
+  },
+  
+  // Crypto - BTC Price Ranges
+  'bitcoin price on february 27': {
+    url: 'https://polymarket.com/event/bitcoin-price-on-february-27',
+    outcomes: {
+      'below 62000': 0.017,
+      '62000-64000': 0.017,
+      '64000-66000': 0.205,
+      '66000-68000': 0.61,
+      '68000-70000': 0.14,
+      '70000-72000': 0.02,
+      'above 72000': 0.01
+    }
+  },
+  'bitcoin price on march 1': {
+    url: 'https://polymarket.com/event/bitcoin-price-on-march-1',
+    outcomes: {}  // 需要 browser 抓取实时数据
+  },
+  
+  // Crypto - ETH Price Ranges  
+  'ethereum price on february 27': {
+    url: 'https://polymarket.com/event/ethereum-price-on-february-27',
+    outcomes: {
+      'below 1500': 0.01,
+      '1500-1600': 0.01,
+      '1600-1700': 0.01,
+      '1700-1800': 0.01,
+      '1800-1900': 0.04,
+      '1900-2000': 0.52,
+      '2000-2100': 0.41,
+      '2100-2200': 0.025,
+      'above 2200': 0.01
+    }
+  },
+  
+  // Crypto - SOL Price
+  'solana price on february 27': {
+    url: 'https://polymarket.com/event/solana-price-on-february-27',
+    outcomes: {}  // 需要 browser 抓取
   }
 };
 
@@ -84,9 +134,33 @@ function matchToPolymarket(ftMarket) {
     }
   }
   
-  // 模糊匹配
+  // 模糊匹配 - Central Banks
   if (title.includes('bank of japan') || title.includes('boj')) {
     return KNOWN_POLYMARKET_EVENTS['bank of japan decision in march'];
+  }
+  if (title.includes('fed') || title.includes('federal reserve')) {
+    return KNOWN_POLYMARKET_EVENTS['fed decision in march'];
+  }
+  
+  // 模糊匹配 - Crypto BTC
+  if ((title.includes('btc') || title.includes('bitcoin')) && title.includes('price range')) {
+    // 尝试匹配日期
+    if (title.includes('february 24') || title.includes('feb 24')) {
+      return KNOWN_POLYMARKET_EVENTS['bitcoin price on february 27'];  // 近似匹配
+    }
+    if (title.includes('february') || title.includes('feb')) {
+      return KNOWN_POLYMARKET_EVENTS['bitcoin price on february 27'];
+    }
+  }
+  
+  // 模糊匹配 - Crypto ETH
+  if ((title.includes('eth') || title.includes('ethereum')) && title.includes('price range')) {
+    return KNOWN_POLYMARKET_EVENTS['ethereum price on february 27'];
+  }
+  
+  // 模糊匹配 - Crypto SOL
+  if ((title.includes('sol') || title.includes('solana')) && title.includes('price range')) {
+    return KNOWN_POLYMARKET_EVENTS['solana price on february 27'];
   }
   
   return null;
