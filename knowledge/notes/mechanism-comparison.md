@@ -69,13 +69,37 @@
 - 流动性尚小，定价可能不充分
 - 适合小资金试水验证机制
 
-## 五、待验证事项
+## 五、概率计算说明
+
+### 42space Pari-mutuel 概率
+
+42space 页面显示的 "Implied Payout" 不是概率！
+- 例如：implied payout 1.2x → 真实概率 = 1/1.2 = **83.3%**
+- implied payout 29.5x → 真实概率 = 1/29.5 = **3.4%**
+
+**公式**: `probability = 1 / implied_payout`
+
+⚠️ API 返回的 `price` 字段不是概率，需要用 implied payout 计算。
+
+### 与 Polymarket 对比示例
+
+事件：Bank of Japan Decision in March 2026
+
+| Outcome | 42space (Implied Payout) | 42space 概率 | Polymarket 概率 | 差异 |
+|---------|-------------------------|--------------|-----------------|------|
+| No change | 1.2x | 83.3% | 94.8% | -11.5% |
+| 25 bps decrease | 1.2x | 83.3% | <1% | +82% |
+| 25+ bps increase | 29.5x | 3.4% | 4% | -0.6% |
+
+**结论**：42space 认为"降息"和"不变"概率差不多（都是83%），而 Polymarket 认为"不变"是极大概事件（95%）。
+
+## 六、待验证事项
 
 - [ ] 实际Mint/Redeem成本实测（赎回税具体数值）
 - [ ] Power Curve公式反向工程
 - [ ] Points积分用途与价值评估
 - [ ] API字段稳定性监测
-- [ ] 与Polymarket相同事件的赔率对比
+- [x] 与Polymarket相同事件的赔率对比（已发现 BOJ 事件 11.5% 差异）
 
 ## 六、结论
 
