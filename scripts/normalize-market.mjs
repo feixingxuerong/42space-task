@@ -14,6 +14,9 @@
  *   platform: "42space",
  *   market_id: string,        // question_id (唯一标识)
  *   condition_id: string,    // 同 question_id (用于兼容)
+ *   event_address: string,   // Event 合约地址
+ *   event_start: string,     // Event 开始时间
+ *   event_end: string,       // Event 结束时间
  *   title: string,           // 市场标题/问题
  *   question: string,        // 同 title
  *   description: string,    // 详细描述
@@ -155,6 +158,10 @@ function normalizeMarket(raw, stats = null, outcomeDetails = null) {
     resolution_source,
     question_categories,
     outcomes,
+    // Event 维度字段 (从 event 表获取)
+    event_address,
+    start_at,
+    end_at,
   } = raw;
 
   // 解析 outcomes
@@ -231,11 +238,20 @@ function normalizeMarket(raw, stats = null, outcomeDetails = null) {
     platform: '42space',
     market_id: question_id,
     condition_id: question_id,  // 兼容其他平台
+    // Event 维度字段
+    event_address: event_address || null,
+    event_start: formatTimestamp(start_at),
+    event_end: formatTimestamp(end_at),
     title: title || null,
     question: title || null,
     description: description || null,
     outcomes: normalizedOutcomes,
     prices: Object.keys(prices).length > 0 ? prices : null,
+    // 价格转换说明
+    price_notes: {
+      marginal_price_conversion: '除以 1e18 转换为 0-1 概率值',
+      precision_notes: 'marginal_price 为高精度整数，需除以 10^18',
+    },
     fees: null,  // 42.space 暂未提供费用数据
     timestamps: {
       created_at: formatTimestamp(created_at),
@@ -247,6 +263,7 @@ function normalizeMarket(raw, stats = null, outcomeDetails = null) {
       status: status || null,
       source: resolution_source || null,
       result: null,  // 需要额外查询
+      precision_notes: 'status 取自 question.status 或 question_status 表',
     },
     volume,
     traders,

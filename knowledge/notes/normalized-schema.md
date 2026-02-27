@@ -14,8 +14,13 @@ interface NormalizedMarket {
   platform: string;           // e.g., "42space", "polymarket", "manifold"
   
   // 市场标识
-  market_id: string;          // 平台原生的市场唯一ID
-  condition_id: string;       // 兼容其他平台的 condition_id 概念
+  market_id: string;          // 平台原生的市场唯一ID (question_id)
+  condition_id: string;       // 兼容其他平台的
+  
+  // Event 维度 ( condition_id 概念42.space 特有)
+  event_address: string|null;      // Event 合约地址
+  event_start: string|null;         // Event 开始时间 (ISO 8601)
+  event_end: string|null;           // Event 结束时间 (ISO 8601)
   
   // 标题/问题
   title: string;              // 市场标题
@@ -27,6 +32,12 @@ interface NormalizedMarket {
   
   // 价格快照 (简写形式)
   prices: Record<string, number>|null;  // { tokenId: price }
+  
+  // 价格转换说明
+  price_notes: {
+    marginal_price_conversion?: string;  // e.g., "除以 1e18 转换为 0-1"
+    precision_notes?: string;           // 其他精度说明
+  }|null;
   
   // 费用信息
   fees: {
@@ -47,7 +58,9 @@ interface NormalizedMarket {
   resolution: {
     status: string;           // live, finalised, closed, pending
     source: string|null;      // 结算数据来源
-    result: string|null;      // 结算结果描述
+    result: string|null;       // 结算结果描述
+    // 结算精度说明
+    precision_notes?: string; // event_resolution_status_precision_notes
   };
   
   // 成交量
@@ -90,10 +103,15 @@ interface NormalizedOutcome {
 | `platform` | string | 是 | 平台名称 (小写) |
 | `market_id` | string | 是 | 市场唯一ID |
 | `condition_id` | string | 是 | 用于跨平台匹配 |
+| `event_address` | string/null | 否 | Event 合约地址 (42.space) |
+| `event_start` | string/null | 否 | Event 开始时间 (ISO 8601) |
+| `event_end` | string/null | 否 | Event 结束时间 (ISO 8601) |
 | `title` | string | 是 | 市场问题/标题 |
 | `outcomes` | array | 是 | 结果选项列表 |
 | `prices` | object/null | 否 | 价格快照 |
+| `price_notes` | object/null | 否 | 价格转换说明 |
 | `resolution.status` | string | 是 | 市场状态 |
+| `resolution.precision_notes` | string/null | 否 | 结算状态精度说明 |
 | `volume.total` | number | 否 | 总成交量 |
 | `timestamps` | object | 是 | 时间相关字段 |
 
@@ -115,6 +133,9 @@ interface NormalizedOutcome {
 | 原始字段 | Normalized 字段 |
 |----------|-----------------|
 | `question_id` | `market_id`, `condition_id` |
+| `event_address` | `event_address` |
+| `event.start_at` | `event_start` |
+| `event.end_at` | `event_end` |
 | `title` | `title`, `question` |
 | `description` | `description` |
 | `outcomes` | `outcomes` |
@@ -142,3 +163,6 @@ interface NormalizedOutcome {
 ## 更新日志
 
 - 2026-02-27: 初始版本
+- 2026-02-27: 新增 event 维度字段 (event_address, event_start, event_end)
+- 2026-02-27: 新增 price_notes (marginal_price 转换说明)
+- 2026-02-27: 新增 resolution.precision_notes (结算状态精度说明)
