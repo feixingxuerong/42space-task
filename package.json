@@ -1,0 +1,11 @@
+{
+  "name": "42space-task",
+  "version": "1.0.0",
+  "description": "42.space prediction market research and tasks",
+  "main": "index.js",
+  "scripts": {
+    "generate-snapshot": "node scripts/generate-snapshot.js"
+  },
+  "keywords": ["42space", "polymarket", "prediction-market"],
+  "license": "MIT"
+}

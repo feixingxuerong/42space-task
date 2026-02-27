@@ -1,0 +1,56 @@
+name: Daily Markets Snapshot
+
+on:
+  schedule:
+    # 每天 UTC 0:00 (Asia/Shanghai 08:00)
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    # 支持手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Generate markets snapshot
+        run: npm run generate-snapshot
+      
+      - name: Commit and push snapshot
+        id: commit
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          FILE="outputs/markets-normalized-${DATE}.json"
+          
+          if [ -f "$FILE" ]; then
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            
+            git add outputs/
+            git diff --cached --quiet && echo "No changes to commit" && exit 0
+            
+            git commit -m "daily: markets snapshot $(date +%Y-%m-%d)"
+            git push
+            echo "committed=true" >> $GITHUB_OUTPUT
+          else
+            echo "Snapshot file not found: $FILE"
+            exit 1
+          fi
