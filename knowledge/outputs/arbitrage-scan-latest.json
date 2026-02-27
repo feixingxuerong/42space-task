@@ -1,0 +1,144 @@
+{
+  "timestamp": "2026-02-27T10:14:46.219Z",
+  "opportunities": [
+    {
+      "ftMarket": {
+        "platform": "42space",
+        "market_id": "0x0d4f68431c06736f8c7f66009eed67e1ae1c7a39fcfd4cf5b6e6eb4a0266c79d",
+        "condition_id": "0x0d4f68431c06736f8c7f66009eed67e1ae1c7a39fcfd4cf5b6e6eb4a0266c79d",
+        "title": "Bank of Japan decision in March 2026?",
+        "question": "Bank of Japan decision in March 2026?",
+        "description": "### Resolution Criteria\nThis market will resolve to the amount of basis points the upper bound of the short-term policy interest rate is changed by versus the level it was prior to the Bank of Japan's **March 2026** meeting.\n\nIf the short-term policy interest rate is changed to a level not expressed in the displayed options, the change will be rounded up to the nearest 25 and will resolve to the relevant bracket (e.g. if there's a cut/increase of 12.5 bps it will be considered to be 25 bps).\n\nThis market may resolve as soon as the Bank of Japan's statement for their **March** meeting with relevant data is issued. If no statement is released by the end date of this meeting, this market will resolve to the \"No Change\" bracket.\n\n### Resolution Source\nThe resolution source for this market is the Bank of Japan's statement after its meeting scheduled for **March 18 - 19, 2026** according to the [official calendar](https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm).\n\nThe level and change of the target short-term policy interest rate is also published at the [official website of the Bank of Japan](https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/index.htm).\n\n\n## Additional Information\n*This market will end before the Bank of Japan meeting begins, and it will resolve within 24 hours of the statement release.*",
+        "outcomes": [
+          {
+            "id": "100",
+            "token_id": 1,
+            "symbol": "25 bps decrease",
+            "description": null,
+            "price": 0.004692395681891662,
+            "volume": 266.2173473904223,
+            "traders": 3
+          },
+          {
+            "id": "101",
+            "token_id": 2,
+            "symbol": "No change",
+            "description": null,
+            "price": 0.004667618527979566,
+            "volume": 261.8648603209878,
+            "traders": 10
+          },
+          {
+            "id": "102",
+            "token_id": 4,
+            "symbol": "25+ bps increase",
+            "description": null,
+            "price": 0.0011865046918718,
+            "volume": 105.10098273620015,
+            "traders": 2
+          },
+          {
+            "id": "103",
+            "token_id": 8,
+            "symbol": "50+ bps decrease",
+            "description": null,
+            "price": 0.0011865046918718,
+            "volume": 10.176044026696761,
+            "traders": 1
+          }
+        ],
+        "prices": {
+          "1": 0.004692395681891662,
+          "2": 0.004667618527979566,
+          "4": 0.0011865046918718,
+          "8": 0.0011865046918718
+        },
+        "fees": null,
+        "timestamps": {
+          "created_at": "2026-02-05T09:17:03.993243+00:00",
+          "end_timestamp": null,
+          "resolved_at": null,
+          "updated_at": "2026-02-25T15:39:42.272358+00:00"
+        },
+        "resolution": {
+          "status": null,
+          "source": null,
+          "result": null
+        },
+        "volume": {
+          "total": 643.359234474307,
+          "buy": 586.9365166666598,
+          "sell": 56.422717807647125
+        },
+        "traders": 10,
+        "collateral": 525.7235996351784,
+        "category": "Economy",
+        "raw": {
+          "question_id": "0x0d4f68431c06736f8c7f66009eed67e1ae1c7a39fcfd4cf5b6e6eb4a0266c79d",
+          "title": "Bank of Japan decision in March 2026?",
+          "description": "### Resolution Criteria\nThis market will resolve to the amount of basis points the upper bound of the short-term policy interest rate is changed by versus the level it was prior to the Bank of Japan's **March 2026** meeting.\n\nIf the short-term policy interest rate is changed to a level not expressed in the displayed options, the change will be rounded up to the nearest 25 and will resolve to the relevant bracket (e.g. if there's a cut/increase of 12.5 bps it will be considered to be 25 bps).\n\nThis market may resolve as soon as the Bank of Japan's statement for their **March** meeting with relevant data is issued. If no statement is released by the end date of this meeting, this market will resolve to the \"No Change\" bracket.\n\n### Resolution Source\nThe resolution source for this market is the Bank of Japan's statement after its meeting scheduled for **March 18 - 19, 2026** according to the [official calendar](https://www.boj.or.jp/en/mopo/mpmsche_minu/index.htm).\n\nThe level and change of the target short-term policy interest rate is also published at the [official website of the Bank of Japan](https://www.boj.or.jp/en/mopo/mpmdeci/state_2025/index.htm).\n\n\n## Additional Information\n*This market will end before the Bank of Japan meeting begins, and it will resolve within 24 hours of the statement release.*",
+          "created_at": "2026-02-05T09:17:03.993243+00:00",
+          "question_categories": [
+            {
+              "category_id": "4",
+              "category": {
+                "name": "Economy"
+              }
+            }
+          ],
+          "outcomes": [
+            {
+              "id": "100",
+              "token_id": "1"
+            },
+            {
+              "id": "101",
+              "token_id": "2"
+            },
+            {
+              "id": "102",
+              "token_id": "4"
+            },
+            {
+              "id": "103",
+              "token_id": "8"
+            }
+          ]
+        }
+      },
+      "polyUrl": "https://polymarket.com/event/bank-of-japan-decision-in-march",
+      "comparisons": [
+        {
+          "outcome": "25 bps decrease",
+          "ftProb": "41.4",
+          "polyProb": "0.5",
+          "diff": "40.9"
+        },
+        {
+          "outcome": "No change",
+          "ftProb": "40.7",
+          "polyProb": "94.8",
+          "diff": "54.1"
+        },
+        {
+          "outcome": "25+ bps increase",
+          "ftProb": "16.3",
+          "polyProb": "0.5",
+          "diff": "15.8"
+        },
+        {
+          "outcome": "50+ bps decrease",
+          "ftProb": "1.6",
+          "polyProb": "0.5",
+          "diff": "1.1"
+        }
+      ],
+      "maxDiff": 54.1
+    }
+  ],
+  "summary": {
+    "totalMarkets": 10,
+    "liquidMarkets": 7,
+    "opportunities": 1
+  }
+}
