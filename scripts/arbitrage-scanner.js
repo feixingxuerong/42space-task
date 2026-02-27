@@ -1,8 +1,8 @@
 /**
  * Arbitrage Scanner: 42space vs Polymarket
  * 
- * 扫描两个平台的相同事件，计算价差，发现套利机会
- * 使用本地 normalized snapshot 数据
+ * 使用本地 snapshot + 预设映射对比
+ * 子代理发现机会时用 web_fetch 动态补充
  * 
  * 运行: node scripts/arbitrage-scanner.js
  */
@@ -10,8 +10,9 @@
 const fs = require('fs');
 const path = require('path');
 
-// Discord webhook (从环境变量或配置文件读取)
+// Discord webhook
 const DISCORD_WEBHOOK = process.env.DISCORD_WEBHOOK || '';
+const ARBITRAGE_THRESHOLD = 10;
 
 /**
  * 获取最新的 normalized snapshot
@@ -19,71 +20,40 @@ const DISCORD_WEBHOOK = process.env.DISCORD_WEBHOOK || '';
 function getLatestSnapshot() {
   const outputsDir = path.join(__dirname, '../knowledge/outputs');
   
-  if (!fs.existsSync(outputsDir)) {
-    console.error('Outputs directory not found');
-    return [];
-  }
+  if (!fs.existsSync(outputsDir)) return [];
   
   const files = fs.readdirSync(outputsDir)
     .filter(f => f.match(/^markets-normalized-\d{4}-\d{2}-\d{2}\.json$/))
-    .sort()
-    .reverse();
+    .sort().reverse();
   
-  if (files.length === 0) {
-    console.error('No snapshot files found');
-    return [];
-  }
+  if (files.length === 0) return [];
   
-  const latestFile = path.join(outputsDir, files[0]);
   console.log(`Using snapshot: ${files[0]}`);
-  
-  return JSON.parse(fs.readFileSync(latestFile, 'utf-8'));
+  return JSON.parse(fs.readFileSync(path.join(outputsDir, files[0]), 'utf-8'));
 }
 
 /**
- * 计算 42space Pari-mutuel 隐含概率
- * 注意: Pari-mutuel 的概率是基于当前池子比例，而非固定价格
+ * 42space 概率计算 (基于池子 volume)
  */
 function calculate42spaceProbabilities(market) {
   if (!market.outcomes) return {};
   
-  const totalVolume = market.outcomes.reduce((sum, o) => sum + (o.volume || 0), 0);
-  if (totalVolume === 0) return {};
+  const total = market.outcomes.reduce((sum, o) => sum + (o.volume || 0), 0);
+  if (total === 0) return {};
   
   const probs = {};
   market.outcomes.forEach(o => {
-    probs[o.symbol] = (o.volume / totalVolume);
+    probs[o.symbol] = o.volume / total;
   });
   return probs;
 }
 
 /**
- * 从 Polymarket 获取事件数据
- * 使用 web scraping 或 API
- */
-async function fetchPolymarketEvent(eventTitle) {
-  // 提取关键词
-  const keywords = eventTitle
-    .replace(/[?]/g, '')
-    .toLowerCase()
-    .split(' ')
-    .filter(w => w.length > 3)
-    .slice(0, 5);
-  
-  // 尝试通过 Google 搜索或直接构造 URL
-  // Polymarket 事件 URL 格式: /event/{slug}
-  const slug = keywords.join('-').substring(0, 50);
-  
-  // 返回搜索关键词，让外部处理
-  return { keywords, slug, searchTerm: eventTitle };
-}
-
-/**
- * 手动定义的已知 Polymarket 事件映射
- * 因为 API 不稳定，使用预设映射
+ * 已知 Polymarket 事件映射
+ * 由子代理动态更新
  */
 const KNOWN_POLYMARKET_EVENTS = {
-  'bank of japan decision in march 2026': {
+  'bank of japan decision in march': {
     url: 'https://polymarket.com/event/bank-of-japan-decision-in-march',
     outcomes: {
       'no change': 0.948,
@@ -97,13 +67,7 @@ const KNOWN_POLYMARKET_EVENTS = {
     outcomes: {
       'no change': 0.90,
       '25 bps increase': 0.08,
-      'decrease rates': 0.01,
-      '50+ bps increase': 0.01
     }
-  },
-  'gold price range': {
-    url: 'https://polymarket.com/event/gold-price-range-mar-5',
-    outcomes: {}
   }
 };
 
@@ -111,7 +75,7 @@ const KNOWN_POLYMARKET_EVENTS = {
  * 匹配 42space 事件到 Polymarket
  */
 function matchToPolymarket(ftMarket) {
-  const title = ftMarket.title?.toLowerCase() || ftMarket.question?.toLowerCase() || '';
+  const title = (ftMarket.title || ftMarket.question || '').toLowerCase();
   
   // 直接匹配
   for (const key of Object.keys(KNOWN_POLYMARKET_EVENTS)) {
@@ -122,18 +86,14 @@ function matchToPolymarket(ftMarket) {
   
   // 模糊匹配
   if (title.includes('bank of japan') || title.includes('boj')) {
-    return KNOWN_POLYMARKET_EVENTS['bank of japan decision in march 2026'];
-  }
-  
-  if (title.includes('gold price')) {
-    return KNOWN_POLYMARKET_EVENTS['gold price range'];
+    return KNOWN_POLYMARKET_EVENTS['bank of japan decision in march'];
   }
   
   return null;
 }
 
 /**
- * 对齐 outcomes 并计算价差
+ * 计算价差
  */
 function calculateDifferences(ftMarket, polyData) {
   const ftProbs = calculate42spaceProbabilities(ftMarket);
@@ -141,33 +101,23 @@ function calculateDifferences(ftMarket, polyData) {
   
   const comparisons = [];
   
-  // 获取 ft outcomes
-  const ftKeys = Object.keys(ftProbs);
-  
-  for (const ftKey of ftKeys) {
-    const ftKeyLower = ftKey.toLowerCase();
-    let matched = null;
-    let diff = 0;
+  for (const ftKey of Object.keys(ftProbs)) {
+    const ftLower = ftKey.toLowerCase();
+    let matched = null, diff = 0;
     
-    // 尝试匹配 poly outcome
     for (const polyKey of Object.keys(polyProbs)) {
-      const polyKeyLower = polyKey.toLowerCase();
+      const polyLower = polyKey.toLowerCase();
       
-      // No change
-      if (ftKeyLower.includes('no change') && polyKeyLower.includes('no change')) {
+      if (ftLower.includes('no change') && polyLower.includes('no change')) {
         matched = polyKey;
         diff = Math.abs(ftProbs[ftKey] - polyProbs[polyKey]);
         break;
       }
-      
-      // Increase
-      if (ftKeyLower.includes('increase') && polyKeyLower.includes('increase')) {
+      if (ftLower.includes('increase') && polyLower.includes('increase')) {
         matched = polyKey;
         diff = Math.abs(ftProbs[ftKey] - polyProbs[polyKey]);
       }
-      
-      // Decrease
-      if (ftKeyLower.includes('decrease') && polyKeyLower.includes('decrease')) {
+      if (ftLower.includes('decrease') && polyLower.includes('decrease')) {
         matched = polyKey;
         diff = Math.abs(ftProbs[ftKey] - polyProbs[polyKey]);
       }
@@ -190,10 +140,7 @@ function calculateDifferences(ftMarket, polyData) {
  * 发送 Discord 通知
  */
 async function sendDiscordNotification(opportunities) {
-  if (!DISCORD_WEBHOOK || opportunities.length === 0) {
-    console.log('No Discord webhook configured or no opportunities found');
-    return;
-  }
+  if (!DISCORD_WEBHOOK || opportunities.length === 0) return;
   
   const embed = {
     embeds: [{
@@ -201,7 +148,7 @@ async function sendDiscordNotification(opportunities) {
       color: 0x00ff00,
       description: `发现 ${opportunities.length} 个潜在套利机会`,
       fields: opportunities.map(opp => ({
-        name: opp.ftMarket.title || opp.ftMarket.question,
+        name: (opp.ftMarket.title || opp.ftMarket.question).slice(0, 100),
         value: opp.comparisons
           .map(c => `• ${c.outcome}: 42space ${c.ftProb}% vs Poly ${c.polyProb}% (差 ${c.diff}%)`)
           .join('\n'),
@@ -212,6 +159,7 @@ async function sendDiscordNotification(opportunities) {
   };
   
   try {
+    const { default: fetch } = await import('node-fetch');
     await fetch(DISCORD_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -219,7 +167,7 @@ async function sendDiscordNotification(opportunities) {
     });
     console.log('Discord notification sent');
   } catch (e) {
-    console.error('Failed to send Discord notification:', e.message);
+    console.error('Discord failed:', e.message);
   }
 }
 
@@ -229,45 +177,36 @@ async function sendDiscordNotification(opportunities) {
 async function main() {
   console.log('=== 42space vs Polymarket Arbitrage Scanner ===\n');
   
-  // 1. 获取 42space snapshot
-  console.log('Loading 42space snapshot...');
   const ftMarkets = getLatestSnapshot();
-  console.log(`Found ${ftMarkets.length} markets in snapshot\n`);
+  console.log(`Found ${ftMarkets.length} markets\n`);
   
-  // 2. 筛选高流动性市场
   const liquidMarkets = ftMarkets.filter(m => 
     m.volume?.total > 100 || m.outcomes?.reduce((s, o) => s + (o.volume || 0), 0) > 100
   );
-  console.log(`Liquid markets (> $100): ${liquidMarkets.length}\n`);
+  console.log(`Liquid markets: ${liquidMarkets.length}\n`);
   
-  // 3. 扫描每个市场
   const opportunities = [];
   
   for (const market of liquidMarkets) {
     const title = market.title || market.question;
     console.log(`Checking: ${title}`);
     
-    // 匹配 Polymarket
     const polyData = matchToPolymarket(market);
-    
     if (!polyData) {
-      console.log('  -> No Polymarket match found\n');
+      console.log('  -> No Polymarket match\n');
       continue;
     }
     
-    // 计算价差
     const comparisons = calculateDifferences(market, polyData);
-    
     if (comparisons.length === 0) {
       console.log('  -> No comparable outcomes\n');
       continue;
     }
     
-    // 检查是否有显著差异 (>10%)
     const maxDiff = comparisons.reduce((max, c) => Math.max(max, parseFloat(c.diff)), 0);
     
-    if (maxDiff > 10) {
-      console.log(`  -> 🚨 ARBITRAGE OPPORTUNITY! Max diff: ${maxDiff}%\n`);
+    if (maxDiff > ARBITRAGE_THRESHOLD) {
+      console.log(`  -> 🚨 ARBITRAGE! Max diff: ${maxDiff}%\n`);
       opportunities.push({
         ftMarket: market,
         polyUrl: polyData.url,
@@ -279,23 +218,19 @@ async function main() {
     }
   }
   
-  // 4. 输出结果
-  console.log('\n=== Summary ===');
-  console.log(`Opportunities found: ${opportunities.length}`);
+  console.log(`\n=== Summary ===`);
+  console.log(`Opportunities: ${opportunities.length}`);
   
   if (opportunities.length > 0) {
-    console.log('\nArbitrage Opportunities:');
     opportunities.forEach((opp, i) => {
       console.log(`\n${i + 1}. ${opp.ftMarket.title || opp.ftMarket.question}`);
-      console.log(`   Polymarket: ${opp.polyUrl}`);
+      console.log(`   ${opp.polyUrl}`);
       console.log(`   Max diff: ${opp.maxDiff}%`);
     });
   }
   
-  // 5. 发送 Discord 通知
   await sendDiscordNotification(opportunities);
   
-  // 6. 保存结果
   const outputPath = path.join(__dirname, '../knowledge/outputs/arbitrage-scan-latest.json');
   fs.writeFileSync(outputPath, JSON.stringify({
     timestamp: new Date().toISOString(),
