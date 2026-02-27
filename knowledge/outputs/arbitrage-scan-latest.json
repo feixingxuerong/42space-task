@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-27T10:27:18.317Z",
+  "timestamp": "2026-02-27T10:36:58.384Z",
   "opportunities": [
     {
       "ftMarket": {
@@ -109,31 +109,35 @@
       "polyUrl": "https://polymarket.com/event/bank-of-japan-decision-in-march",
       "comparisons": [
         {
-          "outcome": "25 bps decrease",
-          "ftProb": "41.4",
-          "polyProb": "0.5",
-          "diff": "40.9"
+          "outcome": "no change",
+          "ftProb": "83.3",
+          "ftPayout": "1.2x",
+          "polyProb": "94.8",
+          "diff": "11.5"
         },
         {
-          "outcome": "No change",
-          "ftProb": "40.7",
-          "polyProb": "94.8",
-          "diff": "54.1"
+          "outcome": "25 bps decrease",
+          "ftProb": "83.3",
+          "ftPayout": "1.2x",
+          "polyProb": "0.5",
+          "diff": "82.8"
         },
         {
           "outcome": "25+ bps increase",
-          "ftProb": "16.3",
+          "ftProb": "3.4",
+          "ftPayout": "29.5x",
           "polyProb": "0.5",
-          "diff": "15.8"
+          "diff": "2.9"
         },
         {
           "outcome": "50+ bps decrease",
-          "ftProb": "1.6",
+          "ftProb": "3.4",
+          "ftPayout": "29.5x",
           "polyProb": "0.5",
-          "diff": "1.1"
+          "diff": "2.9"
         }
       ],
-      "maxDiff": 54.1
+      "maxDiff": 82.8
     }
   ],
   "summary": {
