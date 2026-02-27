@@ -73,30 +73,52 @@ function calculate42spaceProbabilities(market) {
 /**
  * 已知 Polymarket 事件
  * Polymarket 价格 = 概率 (Yes 价格)
+ * 
+ * 更新日期: 2026-02-27
+ * 数据来源: 通过浏览器抓取 Polymarket 页面
  */
 const KNOWN_POLYMARKET_EVENTS = {
-  'bank of japan decision in march': {
-    url: 'https://polymarket.com/event/bank-of-japan-decision-in-march',
-    // 从页面抓取的实际概率
+  // Fed 决策 - 2026年3月
+  // URL: https://polymarket.com/event/fed-decision-in-march-885
+  'fed decision in march 2026': {
+    url: 'https://polymarket.com/event/fed-decision-in-march-885',
     outcomes: {
-      'no change': 0.948,      // 94.8% (页面显示)
-      '25 bps increase': 0.04, // 4%
-      'decrease rates': 0.005,
-      '50+ bps increase': 0.005
-    },
-    // 42space 页面的 implied payout (从页面抓取)
-    ftImpliedPayouts: {
-      'no change': 1.2,    // 1.2x → 83.3%
-      '25 bps decrease': 1.2, // 1.2x → 83.3%
-      '25+ bps increase': 29.5, // 29.5x → 3.4%
-      '50+ bps decrease': 29.5
+      'no change': 0.97,          // 97%
+      '25 bps decrease': 0.02,    // 2%
+      '50+ bps decrease': 0.01,   // 1%
+      '25+ bps increase': 0.001    // <1%
     }
   },
+  
+  // Bank of Japan 决策 - 2026年3月
+  // URL: https://polymarket.com/event/bank-of-japan-decision-in-march
+  'bank of japan decision in march': {
+    url: 'https://polymarket.com/event/bank-of-japan-decision-in-march',
+    outcomes: {
+      'no change': 0.95,          // 95%
+      '25 bps increase': 0.04,    // 4%
+      'decrease rates': 0.01,     // 1%
+      '50+ bps increase': 0.01     // 1%
+    },
+    // 42space 页面的 implied payout (从 normalized snapshot volume 推算)
+    // 42space 使用 pari-mutuel, probability ≈ volume / totalVolume
+    ftVolumeBased: {
+      'no change': 0.407,         // 261.86 / 643.36
+      '25 bps decrease': 0.414,    // 266.22 / 643.36
+      '25+ bps increase': 0.163,   // 105.10 / 643.36
+      '50+ bps decrease': 0.016   // 10.18 / 643.36
+    }
+  },
+  
+  // Bank of Japan 决策 - 2026年4月
+  // URL: https://polymarket.com/event/bank-of-japan-decision-in-april
   'bank of japan decision in april': {
     url: 'https://polymarket.com/event/bank-of-japan-decision-in-april',
     outcomes: {
-      'no change': 0.90,
-      '25 bps increase': 0.08,
+      'no change': 0.51,          // 51%
+      '25 bps increase': 0.45,     // 45%
+      'decrease rates': 0.01,      // 1%
+      '50+ bps increase': 0.01     // 1%
     }
   }
 };
@@ -121,7 +143,67 @@ function matchToPolymarket(ftMarket) {
 }
 
 /**
- * 计算价差（使用 implied payout）
+ * 计算价差（使用 volume-based 概率）
+ * 42space 使用 pari-mutuel, probability ≈ volume / totalVolume
+ */
+function calculateDifferencesWithVolume(ftMarket, polyData) {
+  const comparisons = [];
+  
+  // 计算 42space volume-based 概率
+  const ftProbs = calculate42spaceProbabilities(ftMarket);
+  const ftVolumeProbs = ftProbs.volumeBased;
+  const polyProbs = polyData.outcomes || {};
+  
+  // 匹配 outcomes
+  for (const [ftOutcome, ftProb] of Object.entries(ftVolumeProbs)) {
+    // 匹配 Polymarket outcome
+    let matchedPoly = null;
+    let polyProb = 0;
+    
+    const ftOutcomeLower = ftOutcome.toLowerCase();
+    
+    for (const [polyKey, polyP] of Object.entries(polyProbs)) {
+      const polyKeyLower = polyKey.toLowerCase();
+      
+      // 尝试多种匹配方式
+      if (ftOutcomeLower === polyKeyLower) {
+        matchedPoly = polyKey;
+        polyProb = polyP;
+        break;
+      }
+      if (ftOutcomeLower.includes('no change') && polyKeyLower.includes('no change')) {
+        matchedPoly = polyKey;
+        polyProb = polyP;
+        break;
+      }
+      if (ftOutcomeLower.includes('decrease') && polyKeyLower.includes('decrease')) {
+        matchedPoly = polyKey;
+        polyProb = polyP;
+        break;
+      }
+      if (ftOutcomeLower.includes('increase') && polyKeyLower.includes('increase')) {
+        matchedPoly = polyKey;
+        polyProb = polyP;
+      }
+    }
+    
+    if (matchedPoly && polyProb > 0) {
+      const diff = Math.abs(ftProb - polyProb);
+      comparisons.push({
+        outcome: ftOutcome,
+        ftProb: (ftProb * 100).toFixed(1) + '%',
+        polyProb: (polyProb * 100).toFixed(1) + '%',
+        diff: (diff * 100).toFixed(1) + '%',
+        diffValue: diff
+      });
+    }
+  }
+  
+  return comparisons;
+}
+
+/**
+ * 计算价差（使用 implied payout - 旧方法，保留兼容）
  */
 function calculateDifferencesWithImpliedPayout(ftMarket, polyData) {
   const comparisons = [];
@@ -178,8 +260,8 @@ function calculateDifferencesWithImpliedPayout(ftMarket, polyData) {
  */
 async function main() {
   console.log('=== 42space vs Polymarket Arbitrage Scanner ===\n');
-  console.log('使用 implied payout 计算 42space 概率\n');
-  console.log('公式: probability = 1 / implied_payout\n');
+  console.log('使用 volume-based 概率计算 42space 概率\n');
+  console.log('公式: probability = volume / totalVolume (pari-mutuel)\n');
   
   const ftMarkets = getLatestSnapshot();
   console.log(`Found ${ftMarkets.length} markets\n`);
@@ -201,8 +283,8 @@ async function main() {
       continue;
     }
     
-    // 使用 implied payout 计算
-    const comparisons = calculateDifferencesWithImpliedPayout(market, polyData);
+    // 使用 volume-based 概率计算
+    const comparisons = calculateDifferencesWithVolume(market, polyData);
     
     if (comparisons.length === 0) {
       console.log('  -> No comparable outcomes\n');
@@ -211,21 +293,22 @@ async function main() {
     
     console.log('  Comparisons:');
     comparisons.forEach(c => {
-      console.log(`    ${c.outcome}: 42space ${c.ftProb}% (${c.ftPayout}) vs Poly ${c.polyProb}% (差 ${c.diff}%)`);
+      console.log(`    ${c.outcome}: 42space ${c.ftProb} vs Poly ${c.polyProb} (差 ${c.diff})`);
     });
     
-    const maxDiff = comparisons.reduce((max, c) => Math.max(max, parseFloat(c.diff)), 0);
+    const maxDiff = comparisons.reduce((max, c) => Math.max(max, c.diffValue || 0), 0);
+    const maxDiffPercent = (maxDiff * 100).toFixed(1);
     
-    if (maxDiff > ARBITRAGE_THRESHOLD) {
-      console.log(`  -> 🚨 ARBITRAGE! Max diff: ${maxDiff}%\n`);
+    if (maxDiffPercent > ARBITRAGE_THRESHOLD) {
+      console.log(`  -> 🚨 ARBITRAGE! Max diff: ${maxDiffPercent}%\n`);
       opportunities.push({
         ftMarket: market,
         polyUrl: polyData.url,
         comparisons,
-        maxDiff
+        maxDiff: maxDiffPercent
       });
     } else {
-      console.log(`  -> Diff: ${maxDiff}%\n`);
+      console.log(`  -> Diff: ${maxDiffPercent}%\n`);
     }
   }
   
