@@ -1,0 +1,634 @@
+[
+  {
+    "platform": "42space",
+    "market_id": "0x00c4e062737558fae9732fb1cf0e4b60ec0eec81eaa86b4f3b5419828ac98cea",
+    "condition_id": "0x00c4e062737558fae9732fb1cf0e4b60ec0eec81eaa86b4f3b5419828ac98cea",
+    "title": "BNB price range, Feb 18th?",
+    "question": "BNB price range, Feb 18th?",
+    "description": "## Resolution Criteria:\nThis market resolves to the range of the \"Close\" price for the Binance 1-minute candle for BNB/USDT at Feb 18th, 11:59pm UTC.\n\n## Resolution Sources:\nThe resolution source for this market is Binance, specifically the BNB/USDT \"Close\" prices available on [Binance](https://www.binance.com/en/trade/BNB_USDT?type=spot) with the \"1m\" and \"Candles\" selected on the top bar.\n\n## Additional Information:\nPlease note that the outcome of this market depends solely on the price data from the Binance BNB/USDT trading pair. Prices from other exchanges, different trading pairs, or spot markets will not be considered for resolution. This market will be resolved within 24 hours after the index timestamp.*",
+    "outcomes": [
+      {
+        "id": "486",
+        "token_id": 1,
+        "symbol": "Below $600",
+        "description": null,
+        "price": 0.000156635629693379,
+        "volume": 0.0902788038125164,
+        "traders": 1
+      },
+      {
+        "id": "487",
+        "token_id": 2,
+        "symbol": "$600 – $610",
+        "description": null,
+        "price": 0.002484630654149303,
+        "volume": 57.09025694581405,
+        "traders": 2
+      },
+      {
+        "id": "488",
+        "token_id": 4,
+        "symbol": "$610 – $630",
+        "description": null,
+        "price": 0.000332463707530796,
+        "volume": 5.4855854267511965,
+        "traders": 3
+      },
+      {
+        "id": "489",
+        "token_id": 8,
+        "symbol": "$630 – $640",
+        "description": null,
+        "price": 0.000156635629693379,
+        "volume": 0.0902788038125164,
+        "traders": 1
+      },
+      {
+        "id": "490",
+        "token_id": 16,
+        "symbol": "$640 – $660",
+        "description": null,
+        "price": 0.000156635629693379,
+        "volume": 0.0902788038125164,
+        "traders": 1
+      },
+      {
+        "id": "491",
+        "token_id": 32,
+        "symbol": "Above $660",
+        "description": null,
+        "price": 0.000156635629693379,
+        "volume": 0.0902788038125164,
+        "traders": 1
+      }
+    ],
+    "prices": {
+      "1": 0.000156635629693379,
+      "2": 0.002484630654149303,
+      "4": 0.000332463707530796,
+      "8": 0.000156635629693379,
+      "16": 0.000156635629693379,
+      "32": 0.000156635629693379
+    },
+    "fees": null,
+    "timestamps": {
+      "created_at": "2026-02-17T02:53:23.390119+00:00",
+      "end_timestamp": null,
+      "resolved_at": null,
+      "updated_at": "2026-02-18T23:41:11.506636+00:00"
+    },
+    "resolution": {
+      "status": null,
+      "source": null,
+      "result": null
+    },
+    "volume": {
+      "total": 62.9369575878153,
+      "buy": 60.70164802611928,
+      "sell": 2.2353095616960186
+    },
+    "traders": 3,
+    "collateral": 58.466338464423266,
+    "category": "Crypto",
+    "raw": {
+      "question_id": "0x00c4e062737558fae9732fb1cf0e4b60ec0eec81eaa86b4f3b5419828ac98cea",
+      "title": "BNB price range, Feb 18th?",
+      "description": "## Resolution Criteria:\nThis market resolves to the range of the \"Close\" price for the Binance 1-minute candle for BNB/USDT at Feb 18th, 11:59pm UTC.\n\n## Resolution Sources:\nThe resolution source for this market is Binance, specifically the BNB/USDT \"Close\" prices available on [Binance](https://www.binance.com/en/trade/BNB_USDT?type=spot) with the \"1m\" and \"Candles\" selected on the top bar.\n\n## Additional Information:\nPlease note that the outcome of this market depends solely on the price data from the Binance BNB/USDT trading pair. Prices from other exchanges, different trading pairs, or spot markets will not be considered for resolution. This market will be resolved within 24 hours after the index timestamp.*",
+      "created_at": "2026-02-17T02:53:23.390119+00:00",
+      "question_categories": [
+        {
+          "category_id": "2",
+          "category": {
+            "name": "Crypto"
+          }
+        }
+      ],
+      "outcomes": [
+        {
+          "id": "486",
+          "token_id": "1"
+        },
+        {
+          "id": "487",
+          "token_id": "2"
+        },
+        {
+          "id": "488",
+          "token_id": "4"
+        },
+        {
+          "id": "489",
+          "token_id": "8"
+        },
+        {
+          "id": "490",
+          "token_id": "16"
+        },
+        {
+          "id": "491",
+          "token_id": "32"
+        }
+      ]
+    }
+  },
+  {
+    "platform": "42space",
+    "market_id": "0x02515dd203b0b2946746c0e0d612cecca98c608595a6bddd9033d0aa23c75a74",
+    "condition_id": "0x02515dd203b0b2946746c0e0d612cecca98c608595a6bddd9033d0aa23c75a74",
+    "title": "Gold price range, Mar 5th?",
+    "question": "Gold price range, Mar 5th?",
+    "description": "## Resolution Criteria\nThis market resolves to the range containing the \"Close\" price shown in Yahoo Finance **Historical Data** for **Mar 5th**, which corresponds to the **final trading day** for this market.\n\n## Resolution Sources:\nYahoo Finance Historical Data: [link](https://finance.yahoo.com/quote/GC%3DF/history/)\n\n## Additional Information:\n*Please note that the outcome of this market depends solely on the Yahoo Finance Historical Data \"Close\" value. Prices from other sources will not be considered for resolution. This market will be resolved within 24 hours after the index timestamp.*",
+    "outcomes": [
+      {
+        "id": "747",
+        "token_id": 1,
+        "symbol": "Below $4845",
+        "description": null,
+        "price": 0.000875583268542512,
+        "volume": 5.007757490332745,
+        "traders": 1
+      },
+      {
+        "id": "748",
+        "token_id": 2,
+        "symbol": "$4845 – $5055",
+        "description": null,
+        "price": 0.001010199178825209,
+        "volume": 7.007301624260724,
+        "traders": 2
+      },
+      {
+        "id": "749",
+        "token_id": 4,
+        "symbol": "$5055 – $5205",
+        "description": null,
+        "price": 0.001907463806830087,
+        "volume": 61.02905576190747,
+        "traders": 6
+      },
+      {
+        "id": "750",
+        "token_id": 8,
+        "symbol": "$5205 – $5355",
+        "description": null,
+        "price": 0.002070027498992837,
+        "volume": 187.2292658263692,
+        "traders": 8
+      },
+      {
+        "id": "751",
+        "token_id": 16,
+        "symbol": "$5355 – $5570",
+        "description": null,
+        "price": 0.001010199178825209,
+        "volume": 7.007301624260724,
+        "traders": 2
+      },
+      {
+        "id": "752",
+        "token_id": 32,
+        "symbol": "Above $5570",
+        "description": null,
+        "price": 0.000875583268542512,
+        "volume": 5.007757490332745,
+        "traders": 1
+      }
+    ],
+    "prices": {
+      "1": 0.000875583268542512,
+      "2": 0.001010199178825209,
+      "4": 0.001907463806830087,
+      "8": 0.002070027498992837,
+      "16": 0.001010199178825209,
+      "32": 0.000875583268542512
+    },
+    "fees": null,
+    "timestamps": {
+      "created_at": "2026-02-26T09:00:44.586748+00:00",
+      "end_timestamp": null,
+      "resolved_at": null,
+      "updated_at": "2026-02-27T08:13:16.32102+00:00"
+    },
+    "resolution": {
+      "status": null,
+      "source": null,
+      "result": null
+    },
+    "volume": {
+      "total": 272.2884398174636,
+      "buy": 186.5903015170847,
+      "sell": 85.69813830037889
+    },
+    "traders": 10,
+    "collateral": 98.95863843168542,
+    "category": "Economy",
+    "raw": {
+      "question_id": "0x02515dd203b0b2946746c0e0d612cecca98c608595a6bddd9033d0aa23c75a74",
+      "title": "Gold price range, Mar 5th?",
+      "description": "## Resolution Criteria\nThis market resolves to the range containing the \"Close\" price shown in Yahoo Finance **Historical Data** for **Mar 5th**, which corresponds to the **final trading day** for this market.\n\n## Resolution Sources:\nYahoo Finance Historical Data: [link](https://finance.yahoo.com/quote/GC%3DF/history/)\n\n## Additional Information:\n*Please note that the outcome of this market depends solely on the Yahoo Finance Historical Data \"Close\" value. Prices from other sources will not be considered for resolution. This market will be resolved within 24 hours after the index timestamp.*",
+      "created_at": "2026-02-26T09:00:44.586748+00:00",
+      "question_categories": [
+        {
+          "category_id": "4",
+          "category": {
+            "name": "Economy"
+          }
+        }
+      ],
+      "outcomes": [
+        {
+          "id": "747",
+          "token_id": "1"
+        },
+        {
+          "id": "748",
+          "token_id": "2"
+        },
+        {
+          "id": "749",
+          "token_id": "4"
+        },
+        {
+          "id": "750",
+          "token_id": "8"
+        },
+        {
+          "id": "751",
+          "token_id": "16"
+        },
+        {
+          "id": "752",
+          "token_id": "32"
+        }
+      ]
+    }
+  },
+  {
+    "platform": "42space",
+    "market_id": "0x03e6d1673cb457e294b5fbdd19ab3dd9e1cd8c95a86eb6563a2defb741fa3cc4",
+    "condition_id": "0x03e6d1673cb457e294b5fbdd19ab3dd9e1cd8c95a86eb6563a2defb741fa3cc4",
+    "title": "BTC price range, Feb 18th?",
+    "question": "BTC price range, Feb 18th?",
+    "description": "## Resolution Criteria:\nThis market resolves to the range of the \"Close\" price for the Binance 1-minute candle for BTC/USDT at Feb 18th, 11:59pm UTC.\n\n## Resolution Sources:\nThe resolution source for this market is Binance, specifically the BTC/USDT \"Close\" prices available on [Binance](https://www.binance.com/en/trade/BTC_USDT?type=spot) with the \"1m\" and \"Candles\" selected on the top bar.\n\n## Additional Information:\nPlease note that the outcome of this market depends solely on the price data from the Binance BTC/USDT trading pair. Prices from other exchanges, different trading pairs, or spot markets will not be considered for resolution. This market will be resolved within 24 hours after the index timestamp.*",
+    "outcomes": [
+      {
+        "id": "468",
+        "token_id": 1,
+        "symbol": "Below $66000",
+        "description": null,
+        "price": 0.000156635629693379,
+        "volume": 0.0902788038125164,
+        "traders": 1
+      },
+      {
+        "id": "469",
+        "token_id": 2,
+        "symbol": "$66000 – $67500",
+        "description": null,
+        "price": 0.001933257933594518,
+        "volume": 31.790237361765247,
+        "traders": 5
+      },
+      {
+        "id": "470",
+        "token_id": 4,
+        "symbol": "$67500 – $69000",
+        "description": null,
+        "price": 0.001310850034709173,
+        "volume": 12.840269227287237,
+        "traders": 4
+      },
+      {
+        "id": "471",
+        "token_id": 8,
+        "symbol": "$69000 – $70000",
+        "description": null,
+        "price": 0.001182208307862264,
+        "volume": 10.09027289762333,
+        "traders": 2
+      },
+      {
+        "id": "472",
+        "token_id": 16,
+        "symbol": "$70000 – $72000",
+        "description": null,
+        "price": 0.000156635629693379,
+        "volume": 0.0902788038125164,
+        "traders": 1
+      },
+      {
+        "id": "473",
+        "token_id": 32,
+        "symbol": "Above $72000",
+        "description": null,
+        "price": 0.000156635629693379,
+        "volume": 0.0902788038125164,
+        "traders": 1
+      }
+    ],
+    "prices": {
+      "1": 0.000156635629693379,
+      "2": 0.001933257933594518,
+      "4": 0.001310850034709173,
+      "8": 0.001182208307862264,
+      "16": 0.000156635629693379,
+      "32": 0.000156635629693379
+    },
+    "fees": null,
+    "timestamps": {
+      "created_at": "2026-02-17T02:53:04.338047+00:00",
+      "end_timestamp": null,
+      "resolved_at": null,
+      "updated_at": "2026-02-18T23:43:41.687836+00:00"
+    },
+    "resolution": {
+      "status": null,
+      "source": null,
+      "result": null
+    },
+    "volume": {
+      "total": 54.99161589811336,
+      "buy": 54.99161589811336,
+      "sell": 0
+    },
+    "traders": 7,
+    "collateral": 54.99161589811336,
+    "category": "Crypto",
+    "raw": {
+      "question_id": "0x03e6d1673cb457e294b5fbdd19ab3dd9e1cd8c95a86eb6563a2defb741fa3cc4",
+      "title": "BTC price range, Feb 18th?",
+      "description": "## Resolution Criteria:\nThis market resolves to the range of the \"Close\" price for the Binance 1-minute candle for BTC/USDT at Feb 18th, 11:59pm UTC.\n\n## Resolution Sources:\nThe resolution source for this market is Binance, specifically the BTC/USDT \"Close\" prices available on [Binance](https://www.binance.com/en/trade/BTC_USDT?type=spot) with the \"1m\" and \"Candles\" selected on the top bar.\n\n## Additional Information:\nPlease note that the outcome of this market depends solely on the price data from the Binance BTC/USDT trading pair. Prices from other exchanges, different trading pairs, or spot markets will not be considered for resolution. This market will be resolved within 24 hours after the index timestamp.*",
+      "created_at": "2026-02-17T02:53:04.338047+00:00",
+      "question_categories": [
+        {
+          "category_id": "2",
+          "category": {
+            "name": "Crypto"
+          }
+        }
+      ],
+      "outcomes": [
+        {
+          "id": "468",
+          "token_id": "1"
+        },
+        {
+          "id": "469",
+          "token_id": "2"
+        },
+        {
+          "id": "470",
+          "token_id": "4"
+        },
+        {
+          "id": "471",
+          "token_id": "8"
+        },
+        {
+          "id": "472",
+          "token_id": "16"
+        },
+        {
+          "id": "473",
+          "token_id": "32"
+        }
+      ]
+    }
+  },
+  {
+    "platform": "42space",
+    "market_id": "0x04c0750e9e67197476fcc472cc502329590e7085b4dac6e1615895e3655b516f",
+    "condition_id": "0x04c0750e9e67197476fcc472cc502329590e7085b4dac6e1615895e3655b516f",
+    "title": "EPL MW26: Brentford vs Arsenal?",
+    "question": "EPL MW26: Brentford vs Arsenal?",
+    "description": "## Resolution Criteria\nThis market will resolve based on the official final score of the match between **Brentford** and **Arsenal**, scheduled for February 12, 2026, including any goals scored in extra time and the outcome of a penalty shootout, as recorded by the competition organiser.\n###\n*Postponement Policy: If the match is postponed to a date more than 48 hours after the original kickoff time, the market will resolve as \"N/A\".*\n###\n*Abandonment: If the match starts but is abandoned and not completed within 48 hours, the market will resolve according to the status of the match at the time of abandonment if an official result is declared, otherwise it will resolve as \"N/A\".*\n###\n*Full-time policy: Extra time and penalty shootouts (if played) are included for resolution.*\n\n## Resolution Source\n[Official Premier League website](https://www.premierleague.com/en)\n\n[Official Matchweek Schedule](https://www.premierleague.com/en/matches?competition=8&season=2025&matchweek=26&month=01)\n\n## Additional Information\n*This market will end before the match begins, and will be resolved within 24 hours after the official score announcement.*",
+    "outcomes": [
+      {
+        "id": "112",
+        "token_id": 1,
+        "symbol": "Draw",
+        "description": null,
+        "price": 0.001290851721897074,
+        "volume": 12.405524611942516,
+        "traders": 2
+      },
+      {
+        "id": "113",
+        "token_id": 2,
+        "symbol": "N/A",
+        "description": null,
+        "price": 0.0011865046918718,
+        "volume": 10.176044026696761,
+        "traders": 1
+      },
+      {
+        "id": "114",
+        "token_id": 4,
+        "symbol": "Brentford Win",
+        "description": null,
+        "price": 0.0011865046918718,
+        "volume": 10.176044026696761,
+        "traders": 1
+      },
+      {
+        "id": "115",
+        "token_id": 8,
+        "symbol": "Arsenal Win",
+        "description": null,
+        "price": 0.002739674505708768,
+        "volume": 72.2026509805021,
+        "traders": 4
+      }
+    ],
+    "prices": {
+      "1": 0.001290851721897074,
+      "2": 0.0011865046918718,
+      "4": 0.0011865046918718,
+      "8": 0.002739674505708768
+    },
+    "fees": null,
+    "timestamps": {
+      "created_at": "2026-02-05T09:17:06.180672+00:00",
+      "end_timestamp": null,
+      "resolved_at": null,
+      "updated_at": "2026-02-12T13:34:40.747925+00:00"
+    },
+    "resolution": {
+      "status": null,
+      "source": null,
+      "result": null
+    },
+    "volume": {
+      "total": 104.96026364583815,
+      "buy": 104.96026364583815,
+      "sell": 0
+    },
+    "traders": 5,
+    "collateral": 104.45029469711552,
+    "category": "Sports",
+    "raw": {
+      "question_id": "0x04c0750e9e67197476fcc472cc502329590e7085b4dac6e1615895e3655b516f",
+      "title": "EPL MW26: Brentford vs Arsenal?",
+      "description": "## Resolution Criteria\nThis market will resolve based on the official final score of the match between **Brentford** and **Arsenal**, scheduled for February 12, 2026, including any goals scored in extra time and the outcome of a penalty shootout, as recorded by the competition organiser.\n###\n*Postponement Policy: If the match is postponed to a date more than 48 hours after the original kickoff time, the market will resolve as \"N/A\".*\n###\n*Abandonment: If the match starts but is abandoned and not completed within 48 hours, the market will resolve according to the status of the match at the time of abandonment if an official result is declared, otherwise it will resolve as \"N/A\".*\n###\n*Full-time policy: Extra time and penalty shootouts (if played) are included for resolution.*\n\n## Resolution Source\n[Official Premier League website](https://www.premierleague.com/en)\n\n[Official Matchweek Schedule](https://www.premierleague.com/en/matches?competition=8&season=2025&matchweek=26&month=01)\n\n## Additional Information\n*This market will end before the match begins, and will be resolved within 24 hours after the official score announcement.*",
+      "created_at": "2026-02-05T09:17:06.180672+00:00",
+      "question_categories": [
+        {
+          "category_id": "6",
+          "category": {
+            "name": "Sports"
+          }
+        }
+      ],
+      "outcomes": [
+        {
+          "id": "112",
+          "token_id": "1"
+        },
+        {
+          "id": "113",
+          "token_id": "2"
+        },
+        {
+          "id": "114",
+          "token_id": "4"
+        },
+        {
+          "id": "115",
+          "token_id": "8"
+        }
+      ]
+    }
+  },
+  {
+    "platform": "42space",
+    "market_id": "0x05177571da4309faf2ffcb28db75ea6b23bc5bf02bd6f6ee67a142338b50e1a2",
+    "condition_id": "0x05177571da4309faf2ffcb28db75ea6b23bc5bf02bd6f6ee67a142338b50e1a2",
+    "title": "BTC price range, Feb 17th?",
+    "question": "BTC price range, Feb 17th?",
+    "description": "## Resolution Criteria:\nThis market resolves to the range of the \"Close\" price for the Binance 1-minute candle for BTC/USDT at Feb 17th, 11:59pm UTC.\n\n## Resolution Sources:\nThe resolution source for this market is Binance, specifically the BTC/USDT \"Close\" prices available on [Binance](https://www.binance.com/en/trade/BTC_USDT?type=spot) with the \"1m\" and \"Candles\" selected on the top bar.\n\n## Additional Information:\nPlease note that the outcome of this market depends solely on the price data from the Binance BTC/USDT trading pair. Prices from other exchanges, different trading pairs, or spot markets will not be considered for resolution. This market will be resolved within 24 hours after the index timestamp.*",
+    "outcomes": [
+      {
+        "id": "426",
+        "token_id": 1,
+        "symbol": "Below $66000",
+        "description": null,
+        "price": 0.000875583268542512,
+        "volume": 5.007757490332745,
+        "traders": 1
+      },
+      {
+        "id": "427",
+        "token_id": 2,
+        "symbol": "$66000 – $67500",
+        "description": null,
+        "price": 0.001178848616434097,
+        "volume": 18.291821869063543,
+        "traders": 4
+      },
+      {
+        "id": "428",
+        "token_id": 4,
+        "symbol": "$67500 – $69000",
+        "description": null,
+        "price": 0.002370980342328519,
+        "volume": 63.0644267554175,
+        "traders": 7
+      },
+      {
+        "id": "429",
+        "token_id": 8,
+        "symbol": "$69000 – $70000",
+        "description": null,
+        "price": 0.001140324405692608,
+        "volume": 53.373639229109685,
+        "traders": 4
+      },
+      {
+        "id": "430",
+        "token_id": 16,
+        "symbol": "$70000 – $71500",
+        "description": null,
+        "price": 0.000875583268542512,
+        "volume": 5.007757490332745,
+        "traders": 1
+      },
+      {
+        "id": "431",
+        "token_id": 32,
+        "symbol": "Above $71500",
+        "description": null,
+        "price": 0.000875583268542512,
+        "volume": 5.007757490332745,
+        "traders": 1
+      }
+    ],
+    "prices": {
+      "1": 0.000875583268542512,
+      "2": 0.001178848616434097,
+      "4": 0.002370980342328519,
+      "8": 0.001140324405692608,
+      "16": 0.000875583268542512,
+      "32": 0.000875583268542512
+    },
+    "fees": null,
+    "timestamps": {
+      "created_at": "2026-02-16T03:23:29.750204+00:00",
+      "end_timestamp": null,
+      "resolved_at": null,
+      "updated_at": "2026-02-17T23:58:07.868166+00:00"
+    },
+    "resolution": {
+      "status": null,
+      "source": null,
+      "result": null
+    },
+    "volume": {
+      "total": 149.75316032458898,
+      "buy": 121.33584396890387,
+      "sell": 28.417316355685085
+    },
+    "traders": 13,
+    "collateral": 92.91852761321879,
+    "category": "Crypto",
+    "raw": {
+      "question_id": "0x05177571da4309faf2ffcb28db75ea6b23bc5bf02bd6f6ee67a142338b50e1a2",
+      "title": "BTC price range, Feb 17th?",
+      "description": "## Resolution Criteria:\nThis market resolves to the range of the \"Close\" price for the Binance 1-minute candle for BTC/USDT at Feb 17th, 11:59pm UTC.\n\n## Resolution Sources:\nThe resolution source for this market is Binance, specifically the BTC/USDT \"Close\" prices available on [Binance](https://www.binance.com/en/trade/BTC_USDT?type=spot) with the \"1m\" and \"Candles\" selected on the top bar.\n\n## Additional Information:\nPlease note that the outcome of this market depends solely on the price data from the Binance BTC/USDT trading pair. Prices from other exchanges, different trading pairs, or spot markets will not be considered for resolution. This market will be resolved within 24 hours after the index timestamp.*",
+      "created_at": "2026-02-16T03:23:29.750204+00:00",
+      "question_categories": [
+        {
+          "category_id": "2",
+          "category": {
+            "name": "Crypto"
+          }
+        }
+      ],
+      "outcomes": [
+        {
+          "id": "426",
+          "token_id": "1"
+        },
+        {
+          "id": "427",
+          "token_id": "2"
+        },
+        {
+          "id": "428",
+          "token_id": "4"
+        },
+        {
+          "id": "429",
+          "token_id": "8"
+        },
+        {
+          "id": "430",
+          "token_id": "16"
+        },
+        {
+          "id": "431",
+          "token_id": "32"
+        }
+      ]
+    }
+  }
+]

@@ -9,7 +9,7 @@ const path = require('path');
 
 const GRAPHQL_ENDPOINT = 'ft.42.space';
 const GRAPHQL_PATH = '/v1/graphql';
-const OUTPUT_DIR = path.join(__dirname, 'outputs');
+const OUTPUT_DIR = path.join(__dirname, '..', 'knowledge', 'outputs');
 
 // 获取当天日期 (UTC)
 function getDateString() {

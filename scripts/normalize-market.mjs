@@ -263,7 +263,7 @@ async function main() {
   
   // 获取日期用于输出文件名
   const today = new Date().toISOString().split('T')[0];
-  const outputDir = path.resolve(__dirname, '..', 'outputs');
+  const outputDir = path.resolve(__dirname, '..', 'knowledge', 'outputs');
   
   // 确保输出目录存在
   if (!fs.existsSync(outputDir)) {
