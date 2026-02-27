@@ -1,10 +1,41 @@
-# Sources（来源清单）
+# 42 Space 文档来源
 
-> 记录所有参考资料的 URL、用途、可信度、更新频率、备注。
+> 更新日期：2026-02-27
 
-| ID | 名称 | URL | 用途 | 可信度 | 更新频率 | 备注 |
-|---|---|---|---|---|---|---|
-| S1 | 42.space 官网 | https://www.42.space | 产品入口/交互 | 中 | 不定 | 需要抓取实际调用端点 |
-| S2 | 42.space Docs | https://docs.42.space | 产品文档/规则 | 高 | 不定 | 优先作为规则来源（GitBook） |
-| S3 | 42.space GraphQL | https://ft.42.space/v1/graphql | 市场/合约数据（推测） | 中 | 不定 | 通过 Web App 反向工程发现；需验证 schema |
+## 主站点
 
+- **文档站**: https://docs.42.space
+
+## 关键页面来源
+
+| 页面 | URL | 状态 |
+|------|-----|------|
+| 首页 | https://docs.42.space | ✅ |
+| Quickstart | https://docs.42.space/getting-started/quickstart | ✅ |
+| App Guide | https://docs.42.space/getting-started/publish-your-docs | ✅ |
+| Protocol Mechanics 101 | https://docs.42.space/getting-started/protocol-mechanics-101 | ✅ |
+| Glossary | https://docs.42.space/getting-started/protocol-mechanics-101/glossary | ✅ |
+| 42 Markets | https://docs.42.space/getting-started/protocol-mechanics-101/42-markets | ✅ |
+| 42 Power Curves | https://docs.42.space/getting-started/protocol-mechanics-101/42-power-curves | ✅ |
+| 42 Outcome Tokens | https://docs.42.space/getting-started/protocol-mechanics-101/42-outcome-tokens | ✅ |
+| Market Discovery (Pre-Resolution) | https://docs.42.space/getting-started/protocol-mechanics-101/42-outcome-tokens/market-discovery-pre-resolution | ✅ |
+| Post-Resolution | https://docs.42.space/getting-started/protocol-mechanics-101/42-outcome-tokens/post-resolution | ✅ |
+| Convex Payout Dynamics | https://docs.42.space/getting-started/protocol-mechanics-101/convex-payout-dynamics | ✅ |
+| Playbook to Profiting | https://docs.42.space/getting-started/protocol-mechanics-101/playbook-to-profiting | ✅ |
+| Fees | https://docs.42.space/getting-started/protocol-mechanics-101/fees | ✅ |
+| 42 Points & Referral Program | https://docs.42.space/getting-started/protocol-mechanics-101/42-points-and-referral-program | ✅ |
+
+---
+
+## 知识库文件
+
+- `knowledge/notes/docs-map.md` - 文档站点地图
+- `knowledge/notes/product-rules.md` - 产品规则摘要
+
+---
+
+## 采集说明
+
+- 采集方式: web_fetch
+- 采集日期: 2026-02-27
+- 采集模型: minimax-cn/MiniMax-M2.5
