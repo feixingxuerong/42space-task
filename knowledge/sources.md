@@ -34,6 +34,17 @@
 - `knowledge/notes/graphql-endpoints.md` - GraphQL API 端点文档
 - `knowledge/notes/graphql-queries-samples.md` - GraphQL 查询示例
 - `knowledge/notes/graphql-schema-summary.md` - GraphQL Schema 摘要
+- `knowledge/notes/normalized-schema.md` - 标准化市场数据格式
+
+---
+
+## 采集脚本
+
+| 脚本 | 用途 | 状态 |
+|------|------|------|
+| `scripts/fetch-markets.mjs` | 抓取 42.space 原始市场数据 | ✅ |
+| `scripts/normalize-market.mjs` | 转换为标准化 JSON 格式 | ✅ |
+| `outputs/markets-normalized-*.json` | 标准化输出文件 | ✅ |
 
 ---
 
