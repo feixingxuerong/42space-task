@@ -5,5 +5,6 @@
 | ID | 名称 | URL | 用途 | 可信度 | 更新频率 | 备注 |
 |---|---|---|---|---|---|---|
 | S1 | 42.space 官网 | https://www.42.space | 产品入口/交互 | 中 | 不定 | 需要抓取实际调用端点 |
-| S2 | 42.space Docs | https://docs.42.space | 产品文档/规则 | 高 | 不定 | 优先作为规则来源 |
+| S2 | 42.space Docs | https://docs.42.space | 产品文档/规则 | 高 | 不定 | 优先作为规则来源（GitBook） |
+| S3 | 42.space GraphQL | https://ft.42.space/v1/graphql | 市场/合约数据（推测） | 中 | 不定 | 通过 Web App 反向工程发现；需验证 schema |
 
