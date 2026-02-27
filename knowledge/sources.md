@@ -31,11 +31,23 @@
 
 - `knowledge/notes/docs-map.md` - 文档站点地图
 - `knowledge/notes/product-rules.md` - 产品规则摘要
+- `knowledge/notes/graphql-endpoints.md` - GraphQL API 端点文档
+- `knowledge/notes/graphql-queries-samples.md` - GraphQL 查询示例
+- `knowledge/notes/graphql-schema-summary.md` - GraphQL Schema 摘要
+
+---
+
+## API 来源
+
+| 类型 | 端点 | 状态 |
+|------|------|------|
+| GraphQL (主) | https://ft.42.space/v1/graphql | ✅ 已验证 |
+| GraphQL Introspection | https://ft.42.space/v1/graphql | ✅ 已支持 |
 
 ---
 
 ## 采集说明
 
-- 采集方式: web_fetch
+- 采集方式: web_fetch + Node.js HTTPS 请求
 - 采集日期: 2026-02-27
 - 采集模型: minimax-cn/MiniMax-M2.5

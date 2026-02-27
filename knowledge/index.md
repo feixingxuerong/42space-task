@@ -10,6 +10,10 @@
 - **风控与合规**：限制、KYC/地区限制（如有）、账户安全
 - **数据/API（只读）**：
   - Web App 调用的后端接口（反向工程）→ `notes/api-discovery.md`
+  - **GraphQL API**:
+    - `notes/graphql-endpoints.md` - API 端点清单
+    - `notes/graphql-queries-samples.md` - 查询示例
+    - `notes/graphql-schema-summary.md` - Schema 摘要
   - 官方文档中披露的接口（如果有）
 - **案例库**：典型市场的规则拆解、口径陷阱
 
