@@ -1,0 +1,79 @@
+name: Arbitrage Scanner
+
+on:
+  schedule:
+    # 每天 UTC 8:00 = Asia/Shanghai 16:00
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    # 支持手动触发
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Run Arbitrage Scanner
+        run: node scripts/arbitrage-scanner.js
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      
+      - name: Check for opportunities
+        id: check
+        run: |
+          FILE="knowledge/outputs/arbitrage-scan-latest.json"
+          if [ -f "$FILE" ]; then
+            COUNT=$(node -e "console.log(require('./$FILE').opportunities?.length || 0)")
+            echo "Opportunities: $COUNT"
+            echo "count=$COUNT" >> $GITHUB_OUTPUT
+          else
+            echo "count=0" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Post to Discord (if opportunities found)
+        if: steps.check.outputs.count > '0'
+        run: |
+          # 读取机会数据并发送到 Discord
+          node -e "
+            const fs = require('fs');
+            const data = require('./knowledge/outputs/arbitrage-scan-latest.json');
+            const webhook = process.env.DISCORD_WEBHOOK;
+            
+            if (!webhook || data.opportunities.length === 0) {
+              console.log('No webhook or no opportunities');
+              process.exit(0);
+            }
+            
+            const embed = {
+              embeds: [{
+                title: '🚨 42space vs Polymarket 套利机会',
+                color: 0x00ff00,
+                fields: data.opportunities.map(opp => ({
+                  name: opp.ftMarket.question.slice(0, 100),
+                  value: opp.comparisons
+                    .map(c => '• ' + c.outcome.slice(0, 30) + ': 42space ' + c.ftProb + '% vs Poly ' + c.polyProb + '% (差 ' + c.diff + '%)')
+                    .join('\\n'),
+                  inline: false
+                })),
+                timestamp: new Date().toISOString()
+              }]
+            };
+            
+            fetch(webhook, {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(embed)
+            }).then(() => console.log('Sent to Discord')).catch(console.error);
+          "
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
